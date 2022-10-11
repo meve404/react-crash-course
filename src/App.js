@@ -21,17 +21,33 @@ function App() {
                 id: 3,
                 text: 'Meeting at school',
                 day: 'Feb 7th at 1:30pm',
-                reminder: true
-            },
-        ]
-    )
+                reminder: false
+            }
+  ])
+
+  // Delete Task/ state get passed down, functions get passed up
+  const deleteTask = (id) => {
+    setTasks(tasks.filter(
+      (task) => task.id !== id
+    ))
+  }
+
+  // Toggle reminder true/false
+  const toggleReminder = (id) => {
+    // ...task, reminder: !task.reminder to copy all the tasks and change the reminder
+    setTasks(tasks.map(
+      (task) => task.id === id ? { ...task, reminder: !task.reminder } : task
+    ))
+  }
 
   return (
     <div className="container">
       {/* <h2>{x ? name : 'No'}</h2> x ? : == if x then ... */}
       {/* <Header tittle = 'hello'></Header> */}
       <Header></Header>
-      <Tasks tasks={tasks}></Tasks>
+      {/* if tasks array has tasks -> show tasks else '' */}
+      {tasks.length > 0 ? <Tasks tasks={tasks} onDelete=
+      {deleteTask} onToggle={toggleReminder} ></Tasks> : 'No tasks to show'}
     </div>
   );
 }
