@@ -1,6 +1,7 @@
 import { Header } from "./components/Header"
 import Tasks from "./components/Tasks"
 import { useState } from "react"
+import AddTask from "./components/AddTask"
 
 function App() {
   const [tasks, setTasks] = useState ( // [name of state, function to Update] creates a state. useState is a hook (to get data)
@@ -25,6 +26,11 @@ function App() {
             }
   ])
 
+  // Add Task
+  const addTask = (task) => {
+    console.log(task);
+  }
+
   // Delete Task/ state get passed down, functions get passed up
   const deleteTask = (id) => {
     setTasks(tasks.filter(
@@ -45,7 +51,8 @@ function App() {
       {/* <h2>{x ? name : 'No'}</h2> x ? : == if x then ... */}
       {/* <Header tittle = 'hello'></Header> */}
       <Header></Header>
-      {/* if tasks array has tasks -> show tasks else '' */}
+      <AddTask onAdd={addTask} ></AddTask>
+      {/* if tasks array has tasks -> show tasks else 'No tasks to show' */}
       {tasks.length > 0 ? <Tasks tasks={tasks} onDelete=
       {deleteTask} onToggle={toggleReminder} ></Tasks> : 'No tasks to show'}
     </div>
