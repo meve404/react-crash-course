@@ -4,6 +4,8 @@ import { useState } from "react"
 import AddTask from "./components/AddTask"
 
 function App() {
+  const [showAddTask, setShowAddTask] = useState (false)
+
   const [tasks, setTasks] = useState ( // [name of state, function to Update] creates a state. useState is a hook (to get data)
         [
             {
@@ -28,7 +30,9 @@ function App() {
 
   // Add Task
   const addTask = (task) => {
-    console.log(task);
+    const id = Math.floor(Math.random() * 10000) + 1 // To get a random number from 0 to 1000
+    const newTask = { id, ...task }
+    setTasks([...tasks, newTask])
   }
 
   // Delete Task/ state get passed down, functions get passed up
@@ -50,8 +54,8 @@ function App() {
     <div className="container">
       {/* <h2>{x ? name : 'No'}</h2> x ? : == if x then ... */}
       {/* <Header tittle = 'hello'></Header> */}
-      <Header></Header>
-      <AddTask onAdd={addTask} ></AddTask>
+      <Header onAdd={() => setShowAddTask(!showAddTask)} showAdd={showAddTask} ></Header>
+      {showAddTask && <AddTask onAdd={addTask} ></AddTask>}
       {/* if tasks array has tasks -> show tasks else 'No tasks to show' */}
       {tasks.length > 0 ? <Tasks tasks={tasks} onDelete=
       {deleteTask} onToggle={toggleReminder} ></Tasks> : 'No tasks to show'}
